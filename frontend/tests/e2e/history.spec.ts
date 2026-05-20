@@ -6,10 +6,10 @@ test.describe("History Page", () => {
     await page.goto("/history");
   });
 
-  test("displays history page with data grid", async ({ page }) => {
+test("displays history page with data grid", async ({ page }) => {
     // History appears in breadcrumb
     await expect(page.getByLabel("breadcrumb")).toContainText(/history/i);
-    
+
     // DataGrid should be present
     const dataGrid = page.locator('[role="grid"]');
     await expect(dataGrid).toBeVisible();
@@ -23,15 +23,15 @@ test.describe("History Page", () => {
   test("refresh button reloads data", async ({ page }) => {
     const refreshButton = page.getByLabel("refresh");
     await expect(refreshButton).toBeVisible();
-    
+
     // Click refresh
     await refreshButton.click();
-    
+
     // Grid should still be visible after refresh
     const dataGrid = page.locator('[role="grid"]');
     await expect(dataGrid).toBeVisible();
   });
-
+  
   test("data grid has expected column headers", async ({ page }) => {
     // Wait for grid to load
     await page.waitForSelector('[role="grid"]', { timeout: 10000 });
@@ -64,7 +64,7 @@ test.describe("History Page", () => {
     await page.waitForSelector('[role="grid"]', { timeout: 10000 });
     
     // Look for view button (eye icon)
-    const viewButton = page.getByLabel(/view/i).first();
+    const viewButton = page.getByRole("button", { name: /view/i }).first();
     const hasViewButton = await viewButton.count();
     
     if (hasViewButton > 0) {
